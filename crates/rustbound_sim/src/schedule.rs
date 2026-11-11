@@ -1,7 +1,9 @@
 //! Fixed 20 Hz simulation schedule and world runner.
 
-use crate::machines::{conveyor_advancement_system, drill_cooling_system};
-use bevy_ecs::schedule::Schedule;
+use crate::machines::{
+    conveyor_advancement_system, drill_cooling_system, firmware_execution_system,
+};
+use bevy_ecs::schedule::{IntoScheduleConfigs, Schedule};
 use bevy_ecs::world::World;
 
 /// High-level runner encapsulating the deterministic simulation world and 20 Hz schedule.
@@ -22,8 +24,18 @@ impl SimulationRunner {
         let world = World::new();
         let mut schedule = Schedule::default();
 
-        // Register core simulation systems in topological order
-        schedule.add_systems((drill_cooling_system, conveyor_advancement_system));
+        // Register core simulation systems in topological order:
+        // 1. Firmware execution (dispatches telemetry, executes guest code, buffers commands)
+        // 2. Machine thermal simulation (drill cooling)
+        // 3. Material transit simulation (conveyor slot advancement)
+        schedule.add_systems(
+            (
+                firmware_execution_system,
+                drill_cooling_system,
+                conveyor_advancement_system,
+            )
+                .chain(),
+        );
 
         Self {
             world,

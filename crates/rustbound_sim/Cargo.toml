@@ -10,3 +10,6 @@ rustbound_runtime = { workspace = true }
 bevy_ecs = { workspace = true }
 bevy_app = { workspace = true }
 thiserror = { workspace = true }
+
+[dev-dependencies]
+wasmi = { workspace = true, features = ["wat"] }

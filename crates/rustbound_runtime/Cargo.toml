@@ -7,4 +7,8 @@ license.workspace = true
 [dependencies]
 rustbound_protocol = { workspace = true, features = ["std"] }
 wasmi = { workspace = true }
+zerocopy = { workspace = true }
 thiserror = { workspace = true }
+
+[dev-dependencies]
+wasmi = { workspace = true, features = ["wat"] }

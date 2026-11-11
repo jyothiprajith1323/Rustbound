@@ -7,6 +7,8 @@
 
 #![deny(clippy::float_arithmetic)]
 
+extern crate alloc;
+
 pub mod grid;
 pub mod machines;
 pub mod schedule;
@@ -14,8 +16,9 @@ pub mod snapshot;
 
 pub use grid::{Direction, SubTileProgress, TileCoord};
 pub use machines::{
-    CONVEYOR_SLOT_COUNT, ConveyorBeltComponent, GeneratorComponent, MachineId,
-    QuarryDrillComponent, StorageBayComponent, conveyor_advancement_system, drill_cooling_system,
+    CONVEYOR_SLOT_COUNT, ConveyorBeltComponent, GeneratorComponent, MachineFirmware, MachineId,
+    MachineTerminalLog, QuarryDrillComponent, StorageBayComponent, conveyor_advancement_system,
+    drill_cooling_system, firmware_execution_system,
 };
 pub use schedule::SimulationRunner;
 pub use snapshot::{MachineSnapshot, SNAPSHOT_RING_CAPACITY, SnapshotRingBuffer, WorldSnapshot};
