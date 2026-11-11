@@ -28,6 +28,7 @@ pub struct CompileResult {
 pub struct CompilerWorker {
     pub rustc_path: PathBuf,
     pub sdk_rlib_path: PathBuf,
+    pub search_paths: Vec<PathBuf>,
     pub sandbox: SandboxConfig,
 }
 
@@ -36,6 +37,7 @@ impl Default for CompilerWorker {
         Self {
             rustc_path: PathBuf::from("rustc"),
             sdk_rlib_path: PathBuf::from("librustbound_api.rlib"),
+            search_paths: Vec::new(),
             sandbox: SandboxConfig::default(),
         }
     }
@@ -46,8 +48,14 @@ impl CompilerWorker {
         Self {
             rustc_path,
             sdk_rlib_path,
+            search_paths: Vec::new(),
             sandbox: SandboxConfig::default(),
         }
+    }
+
+    /// Adds a library or dependency search directory (`-L <path>`).
+    pub fn add_search_path(&mut self, path: PathBuf) {
+        self.search_paths.push(path);
     }
 
     /// Performs a fast syntax and type check emitting metadata only.
@@ -65,6 +73,10 @@ impl CompilerWorker {
             .arg(source_path)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped());
+
+        for search_path in &self.search_paths {
+            cmd.arg("-L").arg(search_path);
+        }
 
         if self.sdk_rlib_path.exists() {
             cmd.arg("--extern")
@@ -92,6 +104,8 @@ impl CompilerWorker {
             .arg("opt-level=z")
             .arg("-C")
             .arg("panic=abort")
+            .arg("-C")
+            .arg("link-arg=--allow-undefined")
             .arg("-o")
             .arg(out_wasm_path)
             .arg("--error-format=json")
@@ -99,6 +113,10 @@ impl CompilerWorker {
             .arg(source_path)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped());
+
+        for search_path in &self.search_paths {
+            cmd.arg("-L").arg(search_path);
+        }
 
         if self.sdk_rlib_path.exists() {
             cmd.arg("--extern")

@@ -1,5 +1,9 @@
 use rustbound_compiler::diagnostics::parse_diagnostics_stream;
 use rustbound_compiler::sandbox::{SandboxConfig, SandboxError, run_with_timeout};
+use rustbound_compiler::worker::CompilerWorker;
+use rustbound_protocol::packets::TelemetryPacket;
+use rustbound_runtime::{TickOutcome, VmConfig, VmInstance};
+use std::path::PathBuf;
 use std::process::Command;
 use std::time::Duration;
 
@@ -45,4 +49,87 @@ fn test_sandbox_timeout_watchdog() {
         }
         other => panic!("expected SandboxError::Timeout, got: {:?}", other),
     }
+}
+
+#[test]
+fn test_compiler_worker_real_compilation_and_execution() {
+    let workspace_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .parent()
+        .unwrap()
+        .to_path_buf();
+
+    let rlib_path =
+        workspace_root.join("target/wasm32-unknown-unknown/release/librustbound_api.rlib");
+    if !rlib_path.exists() {
+        // If not precompiled in this environment, skip test
+        eprintln!(
+            "Skipping test: librustbound_api.rlib not found at {:?}",
+            rlib_path
+        );
+        return;
+    }
+
+    let source_dir = std::env::temp_dir().join("rustbound_test_compilation");
+    let _ = std::fs::create_dir_all(&source_dir);
+    let source_file = source_dir.join("test_firmware.rs");
+    let out_wasm = source_dir.join("test_firmware.wasm");
+
+    let player_code = r#"
+#![no_std]
+extern crate rustbound_api;
+use rustbound_api::prelude::*;
+
+#[panic_handler]
+fn panic(_info: &core::panic::PanicInfo) -> ! {
+    loop {}
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn firmware_main() {
+    if let Ok(drill) = QuarryDrill::bind(0) {
+        let _ = drill.temperature();
+    }
+    rustbound_api::yield_tick();
+}
+"#;
+
+    std::fs::write(&source_file, player_code).expect("write source");
+
+    let mut worker = CompilerWorker::new(PathBuf::from("rustc"), rlib_path);
+    worker.add_search_path(workspace_root.join("target/wasm32-unknown-unknown/release/deps"));
+    worker.add_search_path(workspace_root.join("target/release/deps"));
+
+    let result = worker
+        .compile(&source_file, &out_wasm)
+        .expect("compilation");
+    assert!(
+        result.success,
+        "compilation should succeed; diags: {:?}",
+        result.diagnostics
+    );
+    let wasm_bytes = result.wasm_bytes.expect("wasm bytes should be present");
+    assert!(!wasm_bytes.is_empty());
+    assert!(
+        wasm_bytes.len() < 20_000,
+        "wasm binary size should be < 20KB"
+    );
+
+    // Instantiate and execute in Wasmi runtime
+    let mut vm =
+        VmInstance::instantiate(0, &wasm_bytes, VmConfig::default()).expect("instantiate vm");
+    vm.update_telemetry(TelemetryPacket {
+        machine_id: 0,
+        machine_type: 1,
+        status_flags: 1,
+        temperature_celsius: 25,
+        power_draw_watts: 1500,
+        item_count: 0,
+        next_item_id: 0,
+        captured_at_tick: 1,
+    });
+
+    let outcome = vm.execute_tick().expect("execute tick");
+    assert!(matches!(outcome, TickOutcome::Completed { .. }));
 }
