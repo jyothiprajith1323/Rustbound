@@ -1,0 +1,14 @@
+[package]
+name = "rustbound_protocol"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+zerocopy = { workspace = true }
+serde = { workspace = true, optional = true }
+
+[features]
+default = ["std"]
+std = ["zerocopy/std"]
+serde = ["dep:serde"]

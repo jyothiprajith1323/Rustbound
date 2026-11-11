@@ -1,0 +1,12 @@
+[package]
+name = "rustbound_sim"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+rustbound_protocol = { workspace = true, features = ["std"] }
+rustbound_runtime = { workspace = true }
+bevy_ecs = { workspace = true }
+bevy_app = { workspace = true }
+thiserror = { workspace = true }

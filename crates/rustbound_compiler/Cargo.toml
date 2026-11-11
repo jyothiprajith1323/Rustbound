@@ -1,0 +1,11 @@
+[package]
+name = "rustbound_compiler"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+rustbound_protocol = { workspace = true, features = ["std"] }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+thiserror = { workspace = true }

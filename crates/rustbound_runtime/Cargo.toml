@@ -1,0 +1,10 @@
+[package]
+name = "rustbound_runtime"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+rustbound_protocol = { workspace = true, features = ["std"] }
+wasmi = { workspace = true }
+thiserror = { workspace = true }

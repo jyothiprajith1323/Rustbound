@@ -1,0 +1,9 @@
+[package]
+name = "rustbound_api"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+rustbound_protocol = { workspace = true }
+zerocopy = { workspace = true }
