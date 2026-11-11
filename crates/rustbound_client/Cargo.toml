@@ -1,0 +1,22 @@
+[package]
+name = "rustbound_client"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+rustbound_protocol = { workspace = true, features = ["std"] }
+rustbound_runtime = { workspace = true }
+rustbound_compiler = { workspace = true }
+rustbound_sim = { workspace = true }
+bevy_ecs = { workspace = true }
+bevy_app = { workspace = true }
+egui = { workspace = true }
+egui_dock = { workspace = true }
+ropey = { workspace = true }
+thiserror = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+wasmi = { workspace = true, features = ["wat"] }

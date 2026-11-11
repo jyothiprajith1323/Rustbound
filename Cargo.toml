@@ -6,6 +6,7 @@ members = [
     "crates/rustbound_runtime",
     "crates/rustbound_compiler",
     "crates/rustbound_sim",
+    "crates/rustbound_client",
 ]
 
 [workspace.package]
@@ -20,6 +21,7 @@ rustbound_api = { path = "crates/rustbound_api", default-features = false }
 rustbound_runtime = { path = "crates/rustbound_runtime" }
 rustbound_compiler = { path = "crates/rustbound_compiler" }
 rustbound_sim = { path = "crates/rustbound_sim" }
+rustbound_client = { path = "crates/rustbound_client" }
 
 bevy_ecs = { version = "0.20", default-features = false }
 bevy_app = { version = "0.20", default-features = false }
@@ -28,3 +30,6 @@ zerocopy = { version = "0.8", default-features = false, features = ["derive"] }
 thiserror = { version = "2.0" }
 serde = { version = "1.0", default-features = false, features = ["derive"] }
 serde_json = { version = "1.0" }
+egui = { version = "0.36" }
+egui_dock = { version = "0.21" }
+ropey = { version = "1.6" }
