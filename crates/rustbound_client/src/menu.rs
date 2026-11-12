@@ -81,11 +81,14 @@ pub fn menu_ui_system(
                 );
                 ui.add_space(14.0);
 
-                for mission_id in 1u32..=3 {
+                for mission_id in 1u32..=6 {
                     let label = match mission_id {
                         1 => "▶  Mission 01 — Cold Boot (Aux Generator Ignition)",
                         2 => "▶  Mission 02 — Subterranean Extraction (Thermal Core)",
                         3 => "▶  Mission 03 — Single Owner Custody (Affine Logistics)",
+                        4 => "▶  Mission 04 — Immutable Interlock (Depth Registers)",
+                        5 => "▶  Mission 05 — Thermal Governor (Expression Returns)",
+                        6 => "▶  Mission 06 — Automated Gantry (Multi-Machine Routing)",
                         _ => "▶  Mission",
                     };
 

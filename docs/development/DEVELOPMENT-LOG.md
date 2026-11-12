@@ -38,3 +38,13 @@
   - `rustbound_sim`: 10 passed, 0 failed (3 firmware integration, 7 simulation)
 - Executable binary built: `target/debug/rustbound`.
 - Milestone 1 successfully delivered.
+
+---
+
+### Session 2 — Campaign Mission Expansion & Runtime Hardening
+- Implemented **Mission 04: Immutable Interlock**: Teaches `let` vs `let mut`, mutating state across iterations, and resolving compiler error `E0384`.
+- Implemented **Mission 05: Thermal Governor**: Teaches expression-based function returns without semicolons and thermal state branching.
+- Implemented **Mission 06: Automated Gantry Sorting**: Teaches multi-machine coordination using `TransferCrane`, grid coordinates, and linear custody deposit into `StorageBay`.
+- Updated main menu mission selection to expose all 6 campaign directives.
+- Scaled compiler sandbox watchdog timeout ceiling to 15.0s to ensure reliable real `rustc` execution under dual-core / WSL resource contention.
+- Re-verified full test suite: 33 passed, 0 failed, 0 warnings under `-D warnings`.

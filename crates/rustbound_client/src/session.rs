@@ -104,6 +104,48 @@ impl RustboundSession {
                 ));
                 self.inspector.select_machine(0);
             }
+            4 => {
+                // Mission 4: Excavator Drill (ID: 0)
+                self.sim_runner.world_mut().spawn((
+                    MachineId(0),
+                    QuarryDrillComponent::new(500),
+                    MachineFirmware::empty(),
+                    MachineTerminalLog::new(),
+                ));
+                self.inspector.select_machine(0);
+            }
+            5 => {
+                // Mission 5: Thermal Governor (ID: 0)
+                self.sim_runner.world_mut().spawn((
+                    MachineId(0),
+                    QuarryDrillComponent::new(500),
+                    MachineFirmware::empty(),
+                    MachineTerminalLog::new(),
+                ));
+                self.inspector.select_machine(0);
+            }
+            6 => {
+                // Mission 6: Drill (ID: 0), Conveyor (ID: 1), Storage Bay (ID: 2)
+                self.sim_runner.world_mut().spawn((
+                    MachineId(0),
+                    QuarryDrillComponent::new(500),
+                    MachineFirmware::empty(),
+                    MachineTerminalLog::new(),
+                ));
+                self.sim_runner.world_mut().spawn((
+                    MachineId(1),
+                    ConveyorBeltComponent::new(),
+                    MachineFirmware::empty(),
+                    MachineTerminalLog::new(),
+                ));
+                self.sim_runner.world_mut().spawn((
+                    MachineId(2),
+                    StorageBayComponent::new(100),
+                    MachineFirmware::empty(),
+                    MachineTerminalLog::new(),
+                ));
+                self.inspector.select_machine(0);
+            }
             _ => {}
         }
     }
@@ -177,6 +219,53 @@ impl RustboundSession {
                     .all(|d| !d.is_borrow_error())
                 {
                     self.mission.objectives[1].completed = true;
+                }
+            }
+            4 => {
+                // Mission 4: 25 extractions across deepening stratum
+                let mut query = self
+                    .sim_runner
+                    .world_mut()
+                    .query::<(&MachineId, &QuarryDrillComponent)>();
+                for (id, drill) in query.iter(self.sim_runner.world()) {
+                    if id.0 == 0 {
+                        self.mission.objectives[0].completed = true;
+                        if drill.total_extracted >= 25 {
+                            self.mission.objectives[1].completed = true;
+                        }
+                    }
+                }
+            }
+            5 => {
+                // Mission 5: 30 extractions while maintaining temperature < 80°C
+                let mut query = self
+                    .sim_runner
+                    .world_mut()
+                    .query::<(&MachineId, &QuarryDrillComponent)>();
+                for (id, drill) in query.iter(self.sim_runner.world()) {
+                    if id.0 == 0 {
+                        if drill.temperature_celsius < 80 && !drill.is_overheated {
+                            self.mission.objectives[0].completed = true;
+                        }
+                        if drill.total_extracted >= 30 {
+                            self.mission.objectives[1].completed = true;
+                        }
+                    }
+                }
+            }
+            6 => {
+                // Mission 6: 15 items routed into storage
+                let mut query = self
+                    .sim_runner
+                    .world_mut()
+                    .query::<(&MachineId, &StorageBayComponent)>();
+                for (id, storage) in query.iter(self.sim_runner.world()) {
+                    if id.0 == 2 {
+                        self.mission.objectives[0].completed = true;
+                        if storage.stored_count() >= 15 {
+                            self.mission.objectives[1].completed = true;
+                        }
+                    }
                 }
             }
             _ => {}

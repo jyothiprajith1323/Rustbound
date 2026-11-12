@@ -26,7 +26,7 @@ pub struct SandboxConfig {
 impl Default for SandboxConfig {
     fn default() -> Self {
         Self {
-            timeout: Duration::from_secs(5),
+            timeout: Duration::from_secs(15),
             memory_limit_bytes: 1024 * 1024 * 1024, // 1 GB
         }
     }

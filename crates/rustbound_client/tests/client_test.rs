@@ -251,6 +251,30 @@ fn test_game_session_initialization_and_mission_switching() {
     game.setup_mission(3);
     assert_eq!(game.current_mission, 3);
     assert_eq!(game.session.mission.id, 3);
+
+    // Switch to mission 4
+    game.setup_mission(4);
+    assert_eq!(game.current_mission, 4);
+    assert_eq!(game.session.mission.id, 4);
+    assert_eq!(
+        game.session.mission.title,
+        "Mission 04: Immutable Interlock"
+    );
+
+    // Switch to mission 5
+    game.setup_mission(5);
+    assert_eq!(game.current_mission, 5);
+    assert_eq!(game.session.mission.id, 5);
+    assert_eq!(game.session.mission.title, "Mission 05: Thermal Governor");
+
+    // Switch to mission 6
+    game.setup_mission(6);
+    assert_eq!(game.current_mission, 6);
+    assert_eq!(game.session.mission.id, 6);
+    assert_eq!(
+        game.session.mission.title,
+        "Mission 06: Automated Gantry Sorting"
+    );
 }
 
 #[test]

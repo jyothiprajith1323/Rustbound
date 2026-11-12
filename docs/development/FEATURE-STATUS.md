@@ -25,4 +25,8 @@
 - [x] Mission 01: Cold Boot (Generator ignition)
 - [x] Mission 02: Subterranean Extraction (Drill thermal regulation)
 - [x] Mission 03: Single Owner Custody (Drill -> Conveyor -> Storage linear types pipeline)
+- [x] Mission 04: Immutable Interlock (`let` vs `let mut`, depth registers, `E0384` resolution)
+- [x] Mission 05: Thermal Governor (Expression-based returns, functions, cooling cycles)
+- [x] Mission 06: Automated Gantry Sorting (Multi-machine logistics, `TransferCrane`, coordinates)
+- [x] Expanded compiler watchdog timeout (15s ceiling for constrained environments)
 - [x] End-of-milestone verification report
