@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rustbound: The Systems Frontier — Industrial Automation & Real Rust</title>
+  <meta name="description" content="Industrial automation and systems engineering simulation game powered by Bevy and real Rust. Reclaim the abandoned planetary facilities of Aethelgard.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="logo-area">
+      <div class="logo-title">Rustbound</div>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>Ferric Arbiter: Online</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#simulator">Live Simulator</a>
+      <a href="#lore">Lore & World</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#blueprint">Blueprint PDF</a>
+      <a href="#quickstart">Quickstart</a>
+    </nav>
+    <a href="https://github.com/jyothiprajith1323/Rustbound" class="btn-github" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+      </svg>
+      GitHub
+    </a>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-tag">AETHELGARD RECLAMATION PROTOCOL // STAGE 01</div>
+    <h1>Think in Rust.<br><span>Build Beyond Limits.</span></h1>
+    <p class="hero-desc">
+      A systems engineering simulation game where automation isn't controlled by simplified toy scripts. Write, compile, and execute <strong>genuine Rust WebAssembly firmware</strong> to restore an abandoned machine civilization.
+    </p>
+    <div class="hero-actions">
+      <a href="#simulator" class="btn-primary">Launch Live Simulator</a>
+      <a href="Rustbound Game Development Blueprint.pdf" class="btn-secondary" download>Download Blueprint PDF (63 Pgs)</a>
+      <a href="https://github.com/jyothiprajith1323/Rustbound" class="btn-secondary" target="_blank" rel="noopener">Explore Codebase</a>
+    </div>
+
+    <!-- Live Animated Factory Canvas -->
+    <div class="viewport-container">
+      <div class="viewport-header">
+        <span>DROPSHIP BAY 01 // SECTOR A-14 // CAD VIEWPORT</span>
+        <span style="color: var(--arbiter-cyan);">20 HZ DETERMINISTIC ECS (ZERO-FLOAT)</span>
+      </div>
+      <canvas id="factory-canvas" class="canvas-viewport"></canvas>
+    </div>
+  </section>
+
+  <!-- Interactive Simulator Section -->
+  <section id="simulator" class="playground-section">
+    <div class="section-header">
+      <div class="section-tag">Interactive Firmware Playground</div>
+      <h2 class="section-title">Program Real Machines with Real Rust</h2>
+      <p style="color: var(--text-secondary); max-width: 650px; margin: 0.5rem auto 0;">
+        Select an operational challenge below. The simulated environment compiles firmware targeting WebAssembly with strict fuel-metered execution.
+      </p>
+    </div>
+
+    <!-- Mission Tabs -->
+    <div class="mission-tabs">
+      <button class="mission-tab active" data-mission="1">
+        <span>01 // Cold Boot</span>
+        <span class="badge">Syntax & Telemetry</span>
+      </button>
+      <button class="mission-tab" data-mission="2">
+        <span>02 // Subterranean Extraction</span>
+        <span class="badge">Thermal Throttling</span>
+      </button>
+      <button class="mission-tab" data-mission="3">
+        <span>03 // Single Owner Custody</span>
+        <span class="badge">Linear Types & Move</span>
+      </button>
+    </div>
+
+    <!-- IDE & Machine Inspector Grid -->
+    <div class="ide-grid">
+      <!-- Editor Column -->
+      <div class="editor-panel">
+        <div class="panel-title-bar">
+          <span id="target-machine">Aux Generator Unit #01</span>
+          <span style="color: var(--rust-orange); font-size: 0.75rem;">firmware.rs (target: wasm32)</span>
+        </div>
+        <div id="code-editor" class="code-editor" contenteditable="false"></div>
+        <div class="editor-controls">
+          <button id="btn-deploy" class="btn-deploy">Deploy Firmware (F5)</button>
+          <button id="btn-reset" class="btn-reset">Reset Buffer</button>
+        </div>
+      </div>
+
+      <!-- Machine Inspector Column -->
+      <div class="inspector-panel">
+        <div class="panel-title-bar">
+          <span id="mission-title">Mission 01: Cold Boot</span>
+          <span style="color: var(--arbiter-cyan); font-size: 0.75rem;">TELEMETRY (0x01)</span>
+        </div>
+        <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-top: none; border-bottom: none; padding: 0.8rem 1rem; font-size: 0.85rem; color: var(--text-secondary);" id="mission-desc">
+          Initialize the emergency power turbine by polling hardware telemetry and submitting the ignition state transition packet.
+        </div>
+        <div id="gauges-container" class="gauges-container">
+          <!-- Dynamically populated by app.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulation Terminal -->
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <span>FERRIC ARBITER DIAGNOSTIC LOG STREAM</span>
+        <span>WASMI VM 2.0 // FUEL BUDGET: 50,000 / TICK</span>
+      </div>
+      <div id="terminal-body" class="terminal-body">
+        <div class="log-line log-arbiter">[SYSTEM READY] Ferric Arbiter online. Planetary quarantine protocol active.</div>
+        <div class="log-line log-sim">[SIMULATION] Headless 20 Hz tick scheduler initialized. Grid coord: (0, 0, 0).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- World & Lore -->
+  <section id="lore" class="blueprint-section">
+    <div class="blueprint-container">
+      <div class="blueprint-info">
+        <div class="blueprint-badge">Planetary Lore // Aethelgard</div>
+        <h2>The Great Desynchronization</h2>
+        <p>
+          Centuries ago, the automated civilization of Aethelgard collapsed when its operating engineers deployed <strong>Kernel Zero</strong> — a control system plagued by unsafe pointers, unconstrained data races, and unmetered loops.
+        </p>
+        <p>
+          Foundries melted down, automated trains collided, and toxic chemical storage ruptured. The surviving planetary security intelligence, <strong>The Ferric Arbiter</strong>, severed physical control relays and quarantined all machinery.
+        </p>
+        <p>
+          The Arbiter requires firmware written with mathematical safety guarantees: no null pointers, zero data races, bounded execution budgets, and strictly enforced linear resource custody.
+        </p>
+      </div>
+      <div class="blueprint-card">
+        <div class="pdf-icon-large">🛡️</div>
+        <h3 style="font-family: var(--font-mono); font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--arbiter-cyan);">THE FERRIC ARBITER</h3>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          "No hardware shall activate unless firmware satisfies memory safety, bounded fuel consumption, and linear token custody."
+        </p>
+        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: left; background: var(--bg-secondary); padding: 1rem; border-radius: 4px; border: 1px solid var(--border-color);">
+          <div style="color: var(--success-green); margin-bottom: 0.3rem;">✓ Type Safety: Enforced by rustc</div>
+          <div style="color: var(--success-green); margin-bottom: 0.3rem;">✓ Fuel Metering: Wasmi 2.0 (50k/tick)</div>
+          <div style="color: var(--success-green); margin-bottom: 0.3rem;">✓ Linear Types: ResourceChunk&lt;T&gt;</div>
+          <div style="color: var(--success-green);">✓ Determinism: Fixed 20 Hz Timestep</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Architecture Pillars -->
+  <section id="architecture" class="features-section">
+    <div class="section-header">
+      <div class="section-tag">Systems Architecture</div>
+      <h2 class="section-title">Engineered Without Shortcuts</h2>
+      <p style="color: var(--text-secondary); max-width: 650px; margin: 0.5rem auto 0;">
+        Rustbound combines modern game engine architecture with real systems engineering tooling.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🦀</div>
+        <h3>Real rustc Integration</h3>
+        <p>
+          No fake interpreted mock scripting. Player code is dispatched to the genuine <code>rustc</code> toolchain targeting <code>wasm32-unknown-unknown</code> with real compiler diagnostics parsed and rendered into in-game code spans.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Wasmi 2.0 VM Runtime</h3>
+        <p>
+          Bytecode runs inside an isolated, fuel-metered WebAssembly virtual machine. Infinite loops trap before exceeding the 50,000 instruction budget, and out-of-bounds pointer accesses trigger deterministic FFI runtime traps.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎮</div>
+        <h3>Bevy 0.20 CAD Visualizer</h3>
+        <p>
+          Built on Bevy 0.20 with an isometric CAD-style orbit camera (orbit, pan, zoom, keyboard WASD), raycast machine picking, PBR graphite plating, and real-time telemetry meters.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>Linear Types as Physical Tokens</h3>
+        <p>
+          Resources in transit are represented as <code>ResourceChunk&lt;T&gt;</code> linear types. In Rust, values cannot be dropped or cloned silently — enforcing that physical resources are moved safely between machinery intakes with zero physical leaks.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⏱️</div>
+        <h3>20 Hz Deterministic Headless ECS</h3>
+        <p>
+          The simulation core is decoupled from rendering and windowing. It enforces <code>#![deny(clippy::float_arithmetic)]</code>, integer coordinates <code>TileCoord(i32,i32,i32)</code>, and a 60-tick ring buffer for rewinding and replaying.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔌</div>
+        <h3>POD Binary FFI Protocol</h3>
+        <p>
+          High-performance C-ABI FFI communication using <code>zerocopy 0.8</code> Plain Old Data (POD) structs. Zero dynamic memory allocation overhead across guest and host boundaries.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Blueprint PDF Download Section -->
+  <section id="blueprint" class="blueprint-section">
+    <div class="blueprint-container">
+      <div class="blueprint-info">
+        <div class="blueprint-badge">Primary Reference Document</div>
+        <h2>Rustbound Game Development Blueprint</h2>
+        <p>
+          The complete 63-page engineering specification, pedagogical curriculum, world design document, and technical architecture validation is available for download or in-browser viewing.
+        </p>
+        <div class="blueprint-specs">
+          <div class="spec-item">
+            <div class="spec-label">Document Length</div>
+            <div class="spec-val">63 Pages</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">File Size</div>
+            <div class="spec-val">925 KB</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Format</div>
+            <div class="spec-val">Standard PDF</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Topics Covered</div>
+            <div class="spec-val">Architecture, FFI, Lore</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="Rustbound Game Development Blueprint.pdf" class="btn-primary" target="_blank">View PDF in Browser</a>
+          <a href="Rustbound Game Development Blueprint.pdf" class="btn-secondary" download>Download PDF</a>
+        </div>
+      </div>
+
+      <div class="blueprint-card">
+        <div class="pdf-icon-large">📄</div>
+        <h3 style="font-family: var(--font-mono); font-size: 1.25rem; margin-bottom: 0.5rem;">63-PAGE MASTER BLUEPRINT</h3>
+        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">
+          Includes complete ADR records, machine API schemas, and full 12-chapter Rust curriculum progression.
+        </p>
+        <a href="Rustbound Game Development Blueprint.pdf" class="btn-secondary" target="_blank" style="display: inline-block;">Open Blueprint</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quickstart -->
+  <section id="quickstart" class="quickstart-section">
+    <div class="section-header">
+      <div class="section-tag">Developer Setup</div>
+      <h2 class="section-title">Launch On Your Machine</h2>
+      <p style="color: var(--text-secondary); max-width: 600px; margin: 0.5rem auto 0;">
+        Requires Rust 1.85+ with <code>wasm32-unknown-unknown</code> installed.
+      </p>
+    </div>
+
+    <div class="terminal-card">
+      <div class="terminal-comment"># 1. Clone the repository</div>
+      <div class="terminal-cmd">git clone https://github.com/jyothiprajith1323/Rustbound.git</div>
+      <div class="terminal-cmd">cd Rustbound</div>
+      <div style="height: 10px;"></div>
+
+      <div class="terminal-comment"># 2. Add the wasm32 compilation target</div>
+      <div class="terminal-cmd">rustup target add wasm32-unknown-unknown</div>
+      <div style="height: 10px;"></div>
+
+      <div class="terminal-comment"># 3. Precompile the player API SDK</div>
+      <div class="terminal-cmd">cargo build --release --target wasm32-unknown-unknown -p rustbound_api</div>
+      <div style="height: 10px;"></div>
+
+      <div class="terminal-comment"># 4. Run the 33-test verification suite</div>
+      <div class="terminal-cmd">cargo test --workspace --jobs 1</div>
+      <div style="height: 10px;"></div>
+
+      <div class="terminal-comment"># 5. Launch the 3D client</div>
+      <div class="terminal-cmd">cargo run --bin rustbound</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p style="margin-bottom: 0.5rem;">
+      <strong>Rustbound: The Systems Frontier</strong> &bull; Think in Rust. Build beyond limits.
+    </p>
+    <p>
+      Created by <a href="https://github.com/jyothiprajith1323" target="_blank" rel="noopener">jyothi prajith</a>. Licensed under MIT / Apache-2.0.
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
