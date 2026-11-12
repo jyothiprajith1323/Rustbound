@@ -227,3 +227,38 @@ fn test_session_mission_1_cold_boot_progression() {
     // After tick: generator is ignited, mission objectives fulfilled!
     assert!(session.is_mission_completed());
 }
+
+#[test]
+fn test_game_session_initialization_and_mission_switching() {
+    let mut game = rustbound_client::GameSession::new(1);
+    assert_eq!(game.current_mission, 1);
+    assert!(game.show_mission_briefing);
+    assert!(!game.mission_complete);
+    assert_eq!(game.session.mission.id, 1);
+
+    // Switch to mission 2
+    game.setup_mission(2);
+    assert_eq!(game.current_mission, 2);
+    assert!(game.show_mission_briefing);
+    assert!(!game.mission_complete);
+    assert_eq!(game.session.mission.id, 2);
+    assert_eq!(
+        game.session.mission.title,
+        "Mission 02: Subterranean Extraction"
+    );
+
+    // Switch to mission 3
+    game.setup_mission(3);
+    assert_eq!(game.current_mission, 3);
+    assert_eq!(game.session.mission.id, 3);
+}
+
+#[test]
+fn test_camera_transform_calculation() {
+    let cam = rustbound_client::GameCamera::default();
+    let transform = rustbound_client::compute_camera_transform(&cam);
+
+    // Camera must look towards target and be situated in +Y hemisphere
+    assert!(transform.translation.y > 0.0);
+    assert!(transform.translation.length() > 10.0);
+}

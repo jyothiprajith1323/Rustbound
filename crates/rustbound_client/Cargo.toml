@@ -4,11 +4,21 @@ version.workspace = true
 edition.workspace = true
 license.workspace = true
 
+[[bin]]
+name = "rustbound"
+path = "src/main.rs"
+
+[lib]
+name = "rustbound_client"
+path = "src/lib.rs"
+
 [dependencies]
 rustbound_protocol = { workspace = true, features = ["std"] }
 rustbound_runtime = { workspace = true }
 rustbound_compiler = { workspace = true }
 rustbound_sim = { workspace = true }
+bevy = { workspace = true }
+bevy_egui = { workspace = true }
 bevy_ecs = { workspace = true }
 bevy_app = { workspace = true }
 egui = { workspace = true }

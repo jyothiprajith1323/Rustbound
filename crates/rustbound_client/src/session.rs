@@ -306,4 +306,45 @@ impl RustboundSession {
 
         map
     }
+
+    /// Compiles the current editor code using real rustc targeting wasm32-unknown-unknown.
+    pub fn compile_current_firmware(&mut self) -> Result<Vec<u8>, String> {
+        let temp_dir = std::env::temp_dir().join("rustbound_build");
+        let _ = std::fs::create_dir_all(&temp_dir);
+        let src_path = temp_dir.join("player_firmware.rs");
+        let out_wasm = temp_dir.join("player_firmware.wasm");
+
+        let code = self.editor.text();
+        if let Err(e) = std::fs::write(&src_path, &code) {
+            return Err(alloc::format!("failed to write firmware scratch file: {e}"));
+        }
+
+        let root = std::env::current_dir()
+            .unwrap_or_else(|_| std::path::PathBuf::from("/home/prajith/Rustbound"));
+        let rlib = root.join("target/wasm32-unknown-unknown/release/librustbound_api.rlib");
+        if rlib.exists() {
+            self.compiler.sdk_rlib_path = rlib;
+        }
+        self.compiler.search_paths.clear();
+        self.compiler
+            .add_search_path(root.join("target/wasm32-unknown-unknown/release/deps"));
+        self.compiler
+            .add_search_path(root.join("target/release/deps"));
+
+        let res = self
+            .compiler
+            .compile(&src_path, &out_wasm)
+            .map_err(|e| alloc::format!("compiler execution error: {e}"))?;
+
+        self.editor.set_diagnostics(res.diagnostics);
+
+        if res.success {
+            res.wasm_bytes
+                .ok_or_else(|| String::from("compiler succeeded but emitted no wasm binary"))
+        } else {
+            Err(String::from(
+                "compilation failed with errors (inspect Diagnostics tab)",
+            ))
+        }
+    }
 }

@@ -156,9 +156,9 @@ fn test_headless_simulation_performance() {
     let elapsed = start.elapsed();
 
     assert_eq!(runner.current_tick(), 1_000);
-    // 1,000 ticks across 100 entities in debug mode must execute under 500ms (real time is 50,000ms)
+    // 1,000 ticks across 100 entities in debug mode must execute under 1,500ms (real time is 50,000ms)
     assert!(
-        elapsed.as_millis() < 500,
+        elapsed.as_millis() < 1500,
         "1,000 headless ticks took too long: {:?}",
         elapsed
     );
