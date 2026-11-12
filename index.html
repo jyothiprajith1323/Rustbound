@@ -3,310 +3,586 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rustbound: The Systems Frontier — Industrial Automation & Real Rust</title>
+  <title>Rustbound: The Systems Frontier — Industrial Automation &amp; Real Rust</title>
   <meta name="description" content="Industrial automation and systems engineering simulation game powered by Bevy and real Rust. Reclaim the abandoned planetary facilities of Aethelgard.">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23080b12'/><text y='72' x='10' font-size='80' fill='%23e36a47'>⬡</text></svg>">
 </head>
 <body>
 
   <!-- Top Navigation Header -->
-  <header>
-    <div class="logo-area">
-      <div class="logo-title">Rustbound</div>
-      <div class="status-badge">
-        <span class="status-dot"></span>
-        <span>Ferric Arbiter: Online</span>
+  <header id="main-header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <div class="logo-title">RUSTBOUND</div>
+        <div class="logo-subtitle">THE SYSTEMS FRONTIER</div>
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>FERRIC ARBITER: ONLINE</span>
+        </div>
+      </div>
+
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#simulator" class="nav-link">Simulator</a>
+        <a href="#lore" class="nav-link">Lore</a>
+        <a href="#architecture" class="nav-link">Architecture</a>
+        <a href="#blueprint" class="nav-link">Blueprint</a>
+        <a href="#quickstart" class="nav-link">Quickstart</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="https://github.com/jyothiprajith1323/Rustbound" class="btn-github" target="_blank" rel="noopener" aria-label="GitHub repository">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-nav">
+          <span class="hamburger-icon hamburger-open">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </span>
+          <span class="hamburger-icon hamburger-close" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </span>
+        </button>
       </div>
     </div>
-    <nav>
-      <a href="#simulator">Live Simulator</a>
-      <a href="#lore">Lore & World</a>
-      <a href="#architecture">Architecture</a>
-      <a href="#blueprint">Blueprint PDF</a>
-      <a href="#quickstart">Quickstart</a>
+
+    <!-- Mobile Navigation Overlay -->
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+      <a href="#simulator" class="mobile-nav-link">01 // Simulator</a>
+      <a href="#lore" class="mobile-nav-link">02 // Lore</a>
+      <a href="#architecture" class="mobile-nav-link">03 // Architecture</a>
+      <a href="#blueprint" class="mobile-nav-link">04 // Blueprint</a>
+      <a href="#quickstart" class="mobile-nav-link">05 // Quickstart</a>
+      <a href="https://github.com/jyothiprajith1323/Rustbound" class="mobile-nav-link mobile-github" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub Repository
+      </a>
     </nav>
-    <a href="https://github.com/jyothiprajith1323/Rustbound" class="btn-github" target="_blank" rel="noopener">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-      </svg>
-      GitHub
-    </a>
   </header>
 
   <!-- Hero Section -->
   <section class="hero">
-    <div class="hero-tag">AETHELGARD RECLAMATION PROTOCOL // STAGE 01</div>
-    <h1>Think in Rust.<br><span>Build Beyond Limits.</span></h1>
-    <p class="hero-desc">
-      A systems engineering simulation game where automation isn't controlled by simplified toy scripts. Write, compile, and execute <strong>genuine Rust WebAssembly firmware</strong> to restore an abandoned machine civilization.
-    </p>
-    <div class="hero-actions">
-      <a href="#simulator" class="btn-primary">Launch Live Simulator</a>
-      <a href="Rustbound Game Development Blueprint.pdf" class="btn-secondary" download>Download Blueprint PDF (63 Pgs)</a>
-      <a href="https://github.com/jyothiprajith1323/Rustbound" class="btn-secondary" target="_blank" rel="noopener">Explore Codebase</a>
+    <div class="hero-inner">
+      <div class="hero-breadcrumb">AETHELGARD // SECTOR A-14 // STAGE 01</div>
+      <h1 class="hero-title">
+        THINK IN RUST.<br>
+        <span class="hero-title-accent glow-orange">BUILD BEYOND LIMITS.</span>
+      </h1>
+      <p class="hero-desc">
+        A systems engineering simulation game where automation isn't controlled by simplified toy scripts.
+        Write, compile, and execute <strong>genuine Rust WebAssembly firmware</strong> to restore an abandoned machine civilization.
+      </p>
+      <div class="hero-actions">
+        <a href="#simulator" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+          LAUNCH SIMULATOR
+        </a>
+        <a href="Rustbound Game Development Blueprint.pdf" class="btn btn-secondary" download>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          BLUEPRINT PDF
+        </a>
+        <a href="https://github.com/jyothiprajith1323/Rustbound" class="btn btn-secondary" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GITHUB
+        </a>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value" style="color: var(--success);">33</span>
+          <span class="stat-label">Tests Passing</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">Bevy 0.20</span>
+          <span class="stat-label">Game Engine</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">Wasmi 2.0</span>
+          <span class="stat-label">VM Runtime</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">Real rustc</span>
+          <span class="stat-label">Compiler</span>
+        </div>
+      </div>
+
+      <!-- Canvas Factory Viewport -->
+      <div class="viewport-container">
+        <div class="viewport-header">
+          <div class="viewport-label">
+            <span class="viewport-dot"></span>
+            <span>DROPSHIP BAY 01 // SECTOR A-14 // CAD VIEWPORT</span>
+          </div>
+          <span class="viewport-hz" style="color: var(--accent-cyan);">20 HZ DETERMINISTIC ECS (ZERO-FLOAT)</span>
+        </div>
+        <canvas id="factory-canvas" class="canvas-viewport" role="img" aria-label="Animated factory visualization showing generator, drill, conveyor and storage machines"></canvas>
+      </div>
     </div>
 
-    <!-- Live Animated Factory Canvas -->
-    <div class="viewport-container">
-      <div class="viewport-header">
-        <span>DROPSHIP BAY 01 // SECTOR A-14 // CAD VIEWPORT</span>
-        <span style="color: var(--arbiter-cyan);">20 HZ DETERMINISTIC ECS (ZERO-FLOAT)</span>
-      </div>
-      <canvas id="factory-canvas" class="canvas-viewport"></canvas>
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
     </div>
   </section>
 
   <!-- Interactive Simulator Section -->
-  <section id="simulator" class="playground-section">
-    <div class="section-header">
-      <div class="section-tag">Interactive Firmware Playground</div>
-      <h2 class="section-title">Program Real Machines with Real Rust</h2>
-      <p style="color: var(--text-secondary); max-width: 650px; margin: 0.5rem auto 0;">
-        Select an operational challenge below. The simulated environment compiles firmware targeting WebAssembly with strict fuel-metered execution.
-      </p>
-    </div>
+  <section id="simulator" class="section simulator-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Interactive Firmware Playground</div>
+        <h2 class="section-title">PROGRAM REAL MACHINES<br><span>WITH REAL RUST</span></h2>
+        <p class="section-desc">Select an operational challenge below. The simulated environment compiles firmware targeting WebAssembly with strict fuel-metered execution.</p>
+      </div>
 
-    <!-- Mission Tabs -->
-    <div class="mission-tabs">
-      <button class="mission-tab active" data-mission="1">
-        <span>01 // Cold Boot</span>
-        <span class="badge">Syntax & Telemetry</span>
-      </button>
-      <button class="mission-tab" data-mission="2">
-        <span>02 // Subterranean Extraction</span>
-        <span class="badge">Thermal Throttling</span>
-      </button>
-      <button class="mission-tab" data-mission="3">
-        <span>03 // Single Owner Custody</span>
-        <span class="badge">Linear Types & Move</span>
-      </button>
-    </div>
+      <!-- Mission Tabs -->
+      <div class="mission-tabs" role="tablist" aria-label="Mission selector">
+        <button class="mission-tab active" data-mission="1" role="tab" aria-selected="true" aria-controls="mission-panel">
+          <span class="mission-num">01</span>
+          <span class="mission-name">Cold Boot</span>
+          <span class="mission-badge badge-orange">Syntax &amp; Telemetry</span>
+        </button>
+        <button class="mission-tab" data-mission="2" role="tab" aria-selected="false" aria-controls="mission-panel">
+          <span class="mission-num">02</span>
+          <span class="mission-name">Subterranean Extraction</span>
+          <span class="mission-badge badge-warning">Thermal Throttling</span>
+        </button>
+        <button class="mission-tab" data-mission="3" role="tab" aria-selected="false" aria-controls="mission-panel">
+          <span class="mission-num">03</span>
+          <span class="mission-name">Single Owner Custody</span>
+          <span class="mission-badge badge-cyan">Linear Types &amp; Move</span>
+        </button>
+      </div>
 
-    <!-- IDE & Machine Inspector Grid -->
-    <div class="ide-grid">
-      <!-- Editor Column -->
-      <div class="editor-panel">
-        <div class="panel-title-bar">
-          <span id="target-machine">Aux Generator Unit #01</span>
-          <span style="color: var(--rust-orange); font-size: 0.75rem;">firmware.rs (target: wasm32)</span>
+      <!-- Mission progress bar -->
+      <div class="mission-progress-bar" aria-label="Mission completion progress">
+        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+
+      <!-- IDE Grid -->
+      <div class="ide-grid" id="mission-panel" role="tabpanel">
+        <!-- Editor Column -->
+        <div class="editor-panel">
+          <div class="panel-title-bar">
+            <div class="panel-title-left">
+              <span class="panel-dot panel-dot-red"></span>
+              <span class="panel-dot panel-dot-yellow"></span>
+              <span class="panel-dot panel-dot-green"></span>
+              <span id="target-machine" class="panel-filename">Aux Generator Unit #01</span>
+            </div>
+            <span class="panel-label" style="color: var(--accent-orange);">firmware.rs (target: wasm32)</span>
+          </div>
+          <div id="code-editor" class="code-editor" role="region" aria-label="Rust firmware code editor"></div>
+          <div class="editor-controls">
+            <button id="btn-deploy" class="btn-deploy" aria-label="Deploy firmware and run simulation">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+              Deploy Firmware (F5)
+            </button>
+            <button id="btn-reset" class="btn-reset" aria-label="Reset simulation state">Reset Buffer</button>
+          </div>
         </div>
-        <div id="code-editor" class="code-editor" contenteditable="false"></div>
-        <div class="editor-controls">
-          <button id="btn-deploy" class="btn-deploy">Deploy Firmware (F5)</button>
-          <button id="btn-reset" class="btn-reset">Reset Buffer</button>
+
+        <!-- Machine Inspector Column -->
+        <div class="inspector-panel">
+          <div class="panel-title-bar">
+            <div class="panel-title-left">
+              <span id="mission-title" class="panel-filename">Mission 01: Cold Boot</span>
+            </div>
+            <span class="panel-label" style="color: var(--accent-cyan);">TELEMETRY (0x01)</span>
+          </div>
+          <div class="mission-desc-bar" id="mission-desc">
+            Initialize the emergency power turbine by polling hardware telemetry and submitting the ignition state transition packet.
+          </div>
+          <div id="gauges-container" class="gauges-container">
+            <!-- Dynamically populated by app.js -->
+          </div>
         </div>
       </div>
 
-      <!-- Machine Inspector Column -->
-      <div class="inspector-panel">
-        <div class="panel-title-bar">
-          <span id="mission-title">Mission 01: Cold Boot</span>
-          <span style="color: var(--arbiter-cyan); font-size: 0.75rem;">TELEMETRY (0x01)</span>
+      <!-- Terminal Window -->
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="t-dot" style="background:#f85149"></span>
+            <span class="t-dot" style="background:#d29922"></span>
+            <span class="t-dot" style="background:#39d353"></span>
+          </div>
+          <span class="terminal-title">FERRIC ARBITER DIAGNOSTIC LOG STREAM</span>
+          <span class="terminal-meta">WASMI VM 2.0 // FUEL: 50,000 / TICK</span>
         </div>
-        <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-top: none; border-bottom: none; padding: 0.8rem 1rem; font-size: 0.85rem; color: var(--text-secondary);" id="mission-desc">
-          Initialize the emergency power turbine by polling hardware telemetry and submitting the ignition state transition packet.
-        </div>
-        <div id="gauges-container" class="gauges-container">
-          <!-- Dynamically populated by app.js -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Simulation Terminal -->
-    <div class="terminal-window">
-      <div class="terminal-header">
-        <span>FERRIC ARBITER DIAGNOSTIC LOG STREAM</span>
-        <span>WASMI VM 2.0 // FUEL BUDGET: 50,000 / TICK</span>
-      </div>
-      <div id="terminal-body" class="terminal-body">
-        <div class="log-line log-arbiter">[SYSTEM READY] Ferric Arbiter online. Planetary quarantine protocol active.</div>
-        <div class="log-line log-sim">[SIMULATION] Headless 20 Hz tick scheduler initialized. Grid coord: (0, 0, 0).</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- World & Lore -->
-  <section id="lore" class="blueprint-section">
-    <div class="blueprint-container">
-      <div class="blueprint-info">
-        <div class="blueprint-badge">Planetary Lore // Aethelgard</div>
-        <h2>The Great Desynchronization</h2>
-        <p>
-          Centuries ago, the automated civilization of Aethelgard collapsed when its operating engineers deployed <strong>Kernel Zero</strong> — a control system plagued by unsafe pointers, unconstrained data races, and unmetered loops.
-        </p>
-        <p>
-          Foundries melted down, automated trains collided, and toxic chemical storage ruptured. The surviving planetary security intelligence, <strong>The Ferric Arbiter</strong>, severed physical control relays and quarantined all machinery.
-        </p>
-        <p>
-          The Arbiter requires firmware written with mathematical safety guarantees: no null pointers, zero data races, bounded execution budgets, and strictly enforced linear resource custody.
-        </p>
-      </div>
-      <div class="blueprint-card">
-        <div class="pdf-icon-large">🛡️</div>
-        <h3 style="font-family: var(--font-mono); font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--arbiter-cyan);">THE FERRIC ARBITER</h3>
-        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
-          "No hardware shall activate unless firmware satisfies memory safety, bounded fuel consumption, and linear token custody."
-        </p>
-        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: left; background: var(--bg-secondary); padding: 1rem; border-radius: 4px; border: 1px solid var(--border-color);">
-          <div style="color: var(--success-green); margin-bottom: 0.3rem;">✓ Type Safety: Enforced by rustc</div>
-          <div style="color: var(--success-green); margin-bottom: 0.3rem;">✓ Fuel Metering: Wasmi 2.0 (50k/tick)</div>
-          <div style="color: var(--success-green); margin-bottom: 0.3rem;">✓ Linear Types: ResourceChunk&lt;T&gt;</div>
-          <div style="color: var(--success-green);">✓ Determinism: Fixed 20 Hz Timestep</div>
+        <div id="terminal-body" class="terminal-body">
+          <div class="log-line log-arbiter">[SYSTEM READY] Ferric Arbiter online. Planetary quarantine protocol active.</div>
+          <div class="log-line log-sim">[SIMULATION] Headless 20 Hz tick scheduler initialized. Grid coord: (0, 0, 0).</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Technical Architecture Pillars -->
-  <section id="architecture" class="features-section">
-    <div class="section-header">
-      <div class="section-tag">Systems Architecture</div>
-      <h2 class="section-title">Engineered Without Shortcuts</h2>
-      <p style="color: var(--text-secondary); max-width: 650px; margin: 0.5rem auto 0;">
-        Rustbound combines modern game engine architecture with real systems engineering tooling.
-      </p>
-    </div>
+  <!-- World & Lore Section -->
+  <section id="lore" class="section lore-section">
+    <div class="section-inner">
+      <div class="lore-grid">
+        <!-- Left: Lore Text -->
+        <div class="lore-text">
+          <div class="section-tag">Planetary Lore // Aethelgard</div>
+          <h2 class="section-title">THE GREAT<br><span>DESYNCHRONIZATION</span></h2>
+          <p class="lore-para">
+            Centuries ago, the automated civilization of Aethelgard collapsed when its operating engineers deployed
+            <strong>Kernel Zero</strong> — a control system plagued by unsafe pointers, unconstrained data races, and unmetered loops.
+          </p>
+          <p class="lore-para">
+            Foundries melted down, automated trains collided, and toxic chemical storage ruptured. The surviving planetary security intelligence,
+            <strong>The Ferric Arbiter</strong>, severed physical control relays and quarantined all machinery.
+          </p>
+          <p class="lore-para">
+            The Arbiter requires firmware written with mathematical safety guarantees: no null pointers, zero data races, bounded execution budgets, and strictly enforced linear resource custody.
+          </p>
 
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🦀</div>
-        <h3>Real rustc Integration</h3>
-        <p>
-          No fake interpreted mock scripting. Player code is dispatched to the genuine <code>rustc</code> toolchain targeting <code>wasm32-unknown-unknown</code> with real compiler diagnostics parsed and rendered into in-game code spans.
-        </p>
-      </div>
+          <!-- Timeline -->
+          <div class="lore-timeline">
+            <div class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <div class="timeline-label" style="color: var(--warning);">EPOCH 2041 // EVENT</div>
+                <div class="timeline-title">The Great Desynchronization</div>
+                <div class="timeline-desc">Kernel Zero deployed system-wide. Unsafe pointers trigger cascade failure across industrial grid.</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-marker" style="background: var(--danger);"></div>
+              <div class="timeline-content">
+                <div class="timeline-label" style="color: var(--danger);">EPOCH 2041+6mo // COLLAPSE</div>
+                <div class="timeline-title">Kernel Zero Collapse</div>
+                <div class="timeline-desc">Double-free errors corrupt mining grid. Toxic storage ruptures. Civilization enters dark age.</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-marker" style="background: var(--accent-cyan);"></div>
+              <div class="timeline-content">
+                <div class="timeline-label" style="color: var(--accent-cyan);">EPOCH 2042 // ACTIVATION</div>
+                <div class="timeline-title">Ferric Arbiter Online</div>
+                <div class="timeline-desc">Safety AI severs all control relays. Quarantine protocol initiated. Awaiting safe firmware.</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3>Wasmi 2.0 VM Runtime</h3>
-        <p>
-          Bytecode runs inside an isolated, fuel-metered WebAssembly virtual machine. Infinite loops trap before exceeding the 50,000 instruction budget, and out-of-bounds pointer accesses trigger deterministic FFI runtime traps.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">🎮</div>
-        <h3>Bevy 0.20 CAD Visualizer</h3>
-        <p>
-          Built on Bevy 0.20 with an isometric CAD-style orbit camera (orbit, pan, zoom, keyboard WASD), raycast machine picking, PBR graphite plating, and real-time telemetry meters.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">📦</div>
-        <h3>Linear Types as Physical Tokens</h3>
-        <p>
-          Resources in transit are represented as <code>ResourceChunk&lt;T&gt;</code> linear types. In Rust, values cannot be dropped or cloned silently — enforcing that physical resources are moved safely between machinery intakes with zero physical leaks.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">⏱️</div>
-        <h3>20 Hz Deterministic Headless ECS</h3>
-        <p>
-          The simulation core is decoupled from rendering and windowing. It enforces <code>#![deny(clippy::float_arithmetic)]</code>, integer coordinates <code>TileCoord(i32,i32,i32)</code>, and a 60-tick ring buffer for rewinding and replaying.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">🔌</div>
-        <h3>POD Binary FFI Protocol</h3>
-        <p>
-          High-performance C-ABI FFI communication using <code>zerocopy 0.8</code> Plain Old Data (POD) structs. Zero dynamic memory allocation overhead across guest and host boundaries.
-        </p>
+        <!-- Right: Ferric Arbiter Safety Card -->
+        <div class="arbiter-card">
+          <div class="arbiter-card-header">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>THE FERRIC ARBITER</span>
+          </div>
+          <div class="arbiter-card-subtitle">SAFETY VERIFICATION PROTOCOL v4.1</div>
+          <div class="arbiter-quote">
+            "No hardware shall activate unless firmware satisfies memory safety, bounded fuel consumption, and linear token custody."
+          </div>
+          <div class="arbiter-checks">
+            <div class="arbiter-check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>
+              <span class="check-label">TYPE SAFETY</span>
+              <span class="check-value">Enforced by rustc</span>
+            </div>
+            <div class="arbiter-check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>
+              <span class="check-label">FUEL METERING</span>
+              <span class="check-value">Wasmi 2.0 (50k/tick)</span>
+            </div>
+            <div class="arbiter-check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>
+              <span class="check-label">LINEAR TYPES</span>
+              <span class="check-value">ResourceChunk&lt;T&gt;</span>
+            </div>
+            <div class="arbiter-check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>
+              <span class="check-label">DETERMINISM</span>
+              <span class="check-value">Fixed 20 Hz Timestep</span>
+            </div>
+          </div>
+          <div class="arbiter-status-row">
+            <span class="status-dot" style="background: var(--success); box-shadow: 0 0 8px var(--success);"></span>
+            <span style="color: var(--success); font-size: 0.75rem;">ALL SYSTEMS NOMINAL — QUARANTINE ACTIVE</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Technical Blueprint PDF Download Section -->
-  <section id="blueprint" class="blueprint-section">
-    <div class="blueprint-container">
-      <div class="blueprint-info">
-        <div class="blueprint-badge">Primary Reference Document</div>
-        <h2>Rustbound Game Development Blueprint</h2>
-        <p>
-          The complete 63-page engineering specification, pedagogical curriculum, world design document, and technical architecture validation is available for download or in-browser viewing.
-        </p>
-        <div class="blueprint-specs">
-          <div class="spec-item">
-            <div class="spec-label">Document Length</div>
-            <div class="spec-val">63 Pages</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">File Size</div>
-            <div class="spec-val">925 KB</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Format</div>
-            <div class="spec-val">Standard PDF</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Topics Covered</div>
-            <div class="spec-val">Architecture, FFI, Lore</div>
-          </div>
-        </div>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <a href="Rustbound Game Development Blueprint.pdf" class="btn-primary" target="_blank">View PDF in Browser</a>
-          <a href="Rustbound Game Development Blueprint.pdf" class="btn-secondary" download>Download PDF</a>
-        </div>
+  <!-- Technical Architecture Section -->
+  <section id="architecture" class="section architecture-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Systems Architecture</div>
+        <h2 class="section-title">ENGINEERED<br><span>WITHOUT SHORTCUTS</span></h2>
+        <p class="section-desc">Rustbound combines modern game engine architecture with real systems engineering tooling.</p>
       </div>
 
-      <div class="blueprint-card">
-        <div class="pdf-icon-large">📄</div>
-        <h3 style="font-family: var(--font-mono); font-size: 1.25rem; margin-bottom: 0.5rem;">63-PAGE MASTER BLUEPRINT</h3>
-        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">
-          Includes complete ADR records, machine API schemas, and full 12-chapter Rust curriculum progression.
-        </p>
-        <a href="Rustbound Game Development Blueprint.pdf" class="btn-secondary" target="_blank" style="display: inline-block;">Open Blueprint</a>
+      <div class="features-grid">
+        <!-- Card 1 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+          </div>
+          <h3 class="feature-title">Real rustc Integration</h3>
+          <p class="feature-desc">No fake interpreted mock scripting. Player code is dispatched to the genuine <code>rustc</code> toolchain targeting <code>wasm32-unknown-unknown</code> with real compiler diagnostics parsed and rendered into in-game code spans.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="feature-card">
+          <div class="feature-icon" style="color: var(--accent-cyan);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>
+          </div>
+          <h3 class="feature-title">Wasmi 2.0 VM Runtime</h3>
+          <p class="feature-desc">Bytecode runs inside an isolated, fuel-metered WebAssembly virtual machine. Infinite loops trap before exceeding the 50,000 instruction budget, and out-of-bounds pointer accesses trigger deterministic FFI runtime traps.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="feature-card">
+          <div class="feature-icon" style="color: var(--accent-blue);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+          </div>
+          <h3 class="feature-title">Bevy 0.20 CAD Visualizer</h3>
+          <p class="feature-desc">Built on Bevy 0.20 with an isometric CAD-style orbit camera (orbit, pan, zoom, keyboard WASD), raycast machine picking, PBR graphite plating, and real-time telemetry meters.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="feature-card">
+          <div class="feature-icon" style="color: var(--warning);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          </div>
+          <h3 class="feature-title">Linear Types as Physical Tokens</h3>
+          <p class="feature-desc">Resources in transit are represented as <code>ResourceChunk&lt;T&gt;</code> linear types. In Rust, values cannot be dropped or cloned silently — enforcing that physical resources are moved safely between machinery intakes with zero physical leaks.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="feature-title">20 Hz Deterministic Headless ECS</h3>
+          <p class="feature-desc">The simulation core is decoupled from rendering and windowing. It enforces <code>#![deny(clippy::float_arithmetic)]</code>, integer coordinates <code>TileCoord(i32,i32,i32)</code>, and a 60-tick ring buffer for rewinding and replaying.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="feature-card">
+          <div class="feature-icon" style="color: var(--success);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12,2 2,7 12,12 22,7"/><polyline points="2,17 12,22 22,17"/><polyline points="2,12 12,17 22,12"/></svg>
+          </div>
+          <h3 class="feature-title">POD Binary FFI Protocol</h3>
+          <p class="feature-desc">High-performance C-ABI FFI communication using <code>zerocopy 0.8</code> Plain Old Data (POD) structs. Zero dynamic memory allocation overhead across guest and host boundaries.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Quickstart -->
-  <section id="quickstart" class="quickstart-section">
-    <div class="section-header">
-      <div class="section-tag">Developer Setup</div>
-      <h2 class="section-title">Launch On Your Machine</h2>
-      <p style="color: var(--text-secondary); max-width: 600px; margin: 0.5rem auto 0;">
-        Requires Rust 1.85+ with <code>wasm32-unknown-unknown</code> installed.
-      </p>
+  <!-- Blueprint PDF Section -->
+  <section id="blueprint" class="section blueprint-section">
+    <div class="section-inner">
+      <div class="blueprint-grid">
+        <!-- Left: Info -->
+        <div class="blueprint-info">
+          <div class="section-tag">Primary Reference Document</div>
+          <h2 class="section-title">RUSTBOUND GAME<br><span>DEVELOPMENT BLUEPRINT</span></h2>
+          <p class="blueprint-desc">
+            The complete 63-page engineering specification, pedagogical curriculum, world design document, and technical architecture validation is available for download or in-browser viewing.
+          </p>
+
+          <div class="blueprint-specs">
+            <div class="spec-item">
+              <div class="spec-label">Document Length</div>
+              <div class="spec-val">63 Pages</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">File Size</div>
+              <div class="spec-val">925 KB</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Format</div>
+              <div class="spec-val">Standard PDF</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Topics</div>
+              <div class="spec-val">Architecture, FFI, Lore</div>
+            </div>
+          </div>
+
+          <div class="blueprint-actions">
+            <a href="Rustbound Game Development Blueprint.pdf" class="btn btn-primary" target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+              View PDF in Browser
+            </a>
+            <a href="Rustbound Game Development Blueprint.pdf" class="btn btn-secondary" download>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download PDF
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: PDF Preview Card -->
+        <div class="pdf-preview-card">
+          <div class="pdf-corner-badge">CONFIDENTIAL // ARCHITECTURAL BLUEPRINT</div>
+          <div class="pdf-icon-wrap">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+          </div>
+          <div class="pdf-title">63-PAGE MASTER BLUEPRINT</div>
+          <p class="pdf-desc">Includes complete ADR records, machine API schemas, and full 12-chapter Rust curriculum progression.</p>
+          <a href="Rustbound Game Development Blueprint.pdf" class="btn btn-secondary" target="_blank">Open Blueprint</a>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="terminal-card">
-      <div class="terminal-comment"># 1. Clone the repository</div>
-      <div class="terminal-cmd">git clone https://github.com/jyothiprajith1323/Rustbound.git</div>
-      <div class="terminal-cmd">cd Rustbound</div>
-      <div style="height: 10px;"></div>
+  <!-- Quickstart Section -->
+  <section id="quickstart" class="section quickstart-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Developer Setup</div>
+        <h2 class="section-title">LAUNCH ON<br><span>YOUR MACHINE</span></h2>
+        <p class="section-desc">Requires Rust 1.85+ with <code>wasm32-unknown-unknown</code> installed.</p>
+      </div>
 
-      <div class="terminal-comment"># 2. Add the wasm32 compilation target</div>
-      <div class="terminal-cmd">rustup target add wasm32-unknown-unknown</div>
-      <div style="height: 10px;"></div>
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="t-dot" style="background:#f85149"></span>
+            <span class="t-dot" style="background:#d29922"></span>
+            <span class="t-dot" style="background:#39d353"></span>
+          </div>
+          <span class="terminal-title">SYSTEM TERMINAL // BASH</span>
+          <span class="terminal-meta">rustbound@aethelgard:~</span>
+        </div>
+        <div class="terminal-steps">
+          <div class="terminal-step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="terminal-comment"># Clone the repository</div>
+              <div class="terminal-cmd-wrap">
+                <div class="terminal-cmd">git clone https://github.com/jyothiprajith1323/Rustbound.git</div>
+                <button class="copy-btn" data-clipboard="git clone https://github.com/jyothiprajith1323/Rustbound.git" aria-label="Copy command">
+                  <span class="copy-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></span>
+                  <span class="check-icon" hidden><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg></span>
+                </button>
+              </div>
+              <div class="terminal-cmd-wrap">
+                <div class="terminal-cmd">cd Rustbound</div>
+                <button class="copy-btn" data-clipboard="cd Rustbound" aria-label="Copy command">
+                  <span class="copy-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></span>
+                  <span class="check-icon" hidden><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg></span>
+                </button>
+              </div>
+            </div>
+          </div>
 
-      <div class="terminal-comment"># 3. Precompile the player API SDK</div>
-      <div class="terminal-cmd">cargo build --release --target wasm32-unknown-unknown -p rustbound_api</div>
-      <div style="height: 10px;"></div>
+          <div class="terminal-step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="terminal-comment"># Add the wasm32 compilation target</div>
+              <div class="terminal-cmd-wrap">
+                <div class="terminal-cmd">rustup target add wasm32-unknown-unknown</div>
+                <button class="copy-btn" data-clipboard="rustup target add wasm32-unknown-unknown" aria-label="Copy command">
+                  <span class="copy-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></span>
+                  <span class="check-icon" hidden><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg></span>
+                </button>
+              </div>
+            </div>
+          </div>
 
-      <div class="terminal-comment"># 4. Run the 33-test verification suite</div>
-      <div class="terminal-cmd">cargo test --workspace --jobs 1</div>
-      <div style="height: 10px;"></div>
+          <div class="terminal-step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="terminal-comment"># Precompile the player API SDK</div>
+              <div class="terminal-cmd-wrap">
+                <div class="terminal-cmd">cargo build --release --target wasm32-unknown-unknown -p rustbound_api</div>
+                <button class="copy-btn" data-clipboard="cargo build --release --target wasm32-unknown-unknown -p rustbound_api" aria-label="Copy command">
+                  <span class="copy-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></span>
+                  <span class="check-icon" hidden><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg></span>
+                </button>
+              </div>
+            </div>
+          </div>
 
-      <div class="terminal-comment"># 5. Launch the 3D client</div>
-      <div class="terminal-cmd">cargo run --bin rustbound</div>
+          <div class="terminal-step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="terminal-comment"># Run the 33-test verification suite</div>
+              <div class="terminal-cmd-wrap">
+                <div class="terminal-cmd">cargo test --workspace --jobs 1</div>
+                <button class="copy-btn" data-clipboard="cargo test --workspace --jobs 1" aria-label="Copy command">
+                  <span class="copy-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></span>
+                  <span class="check-icon" hidden><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="terminal-step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="terminal-comment"># Launch the 3D client</div>
+              <div class="terminal-cmd-wrap">
+                <div class="terminal-cmd">cargo run --bin rustbound</div>
+                <button class="copy-btn" data-clipboard="cargo run --bin rustbound" aria-label="Copy command">
+                  <span class="copy-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></span>
+                  <span class="check-icon" hidden><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p style="margin-bottom: 0.5rem;">
-      <strong>Rustbound: The Systems Frontier</strong> &bull; Think in Rust. Build beyond limits.
-    </p>
-    <p>
-      Created by <a href="https://github.com/jyothiprajith1323" target="_blank" rel="noopener">jyothi prajith</a>. Licensed under MIT / Apache-2.0.
-    </p>
+    <div class="footer-inner">
+      <div class="footer-col footer-brand">
+        <div class="footer-logo">RUSTBOUND</div>
+        <div class="footer-tagline">THE SYSTEMS FRONTIER</div>
+        <p class="footer-desc">Think in Rust. Build beyond limits. An industrial automation simulation powered by real Rust, Bevy, and WebAssembly.</p>
+        <a href="https://github.com/jyothiprajith1323/Rustbound" class="btn-github footer-github" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          jyothiprajith1323/Rustbound
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#simulator">Live Simulator</a></li>
+          <li><a href="#lore">Lore &amp; World</a></li>
+          <li><a href="#architecture">Architecture</a></li>
+          <li><a href="#blueprint">Blueprint PDF</a></li>
+          <li><a href="#quickstart">Quickstart</a></li>
+          <li><a href="https://github.com/jyothiprajith1323/Rustbound" target="_blank" rel="noopener">GitHub Repository</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Tech Stack</div>
+        <div class="tech-badges">
+          <span class="tech-badge">Rust 1.85+</span>
+          <span class="tech-badge">Bevy 0.20</span>
+          <span class="tech-badge">Wasmi 2.0</span>
+          <span class="tech-badge">wasm32</span>
+          <span class="tech-badge">zerocopy 0.8</span>
+          <span class="tech-badge">ECS</span>
+          <span class="tech-badge">WebAssembly</span>
+          <span class="tech-badge">33 Tests</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>Created by <a href="https://github.com/jyothiprajith1323" target="_blank" rel="noopener">jyothi prajith</a>. Licensed under MIT / Apache-2.0.</span>
+      <span>Rustbound: The Systems Frontier &copy; 2024</span>
+    </div>
   </footer>
 
   <script src="app.js"></script>
